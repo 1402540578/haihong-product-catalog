@@ -1,0 +1,75 @@
+{
+  "companyCn": "海宁海宏新材料有限公司",
+  "companyEn": "HAINING HAIHONG NEW MATERIALS CO., LTD.",
+  "catalogTitle": "沙发面料产品目录",
+  "sourceFile": "产品目录26-7-16（手机版）.xlsx",
+  "sourceDate": "2026-07-16",
+  "generatedAt": "2026-07-27T08:33:51",
+  "productCount": 1165,
+  "categoryCount": 7,
+  "productNameCount": 209,
+  "priceMin": 0.0,
+  "priceMax": 5.41,
+  "categories": [
+    {
+      "name": "多彩印花",
+      "count": 378
+    },
+    {
+      "name": "质感针织绒",
+      "count": 368
+    },
+    {
+      "name": "纤维艺术织物",
+      "count": 182
+    },
+    {
+      "name": "科技皮革&面料",
+      "count": 150
+    },
+    {
+      "name": "现代纹理织物",
+      "count": 37
+    },
+    {
+      "name": "其他系列",
+      "count": 36
+    },
+    {
+      "name": "品味艺术绒",
+      "count": 14
+    }
+  ],
+  "tiers": [
+    {
+      "name": "标准品质",
+      "count": 817
+    },
+    {
+      "name": "经济实惠",
+      "count": 238
+    },
+    {
+      "name": "待分类",
+      "count": 110
+    }
+  ],
+  "salesToolTypes": [
+    {
+      "name": "吊卡",
+      "count": 828
+    },
+    {
+      "name": "块样",
+      "count": 315
+    },
+    {
+      "name": "米样",
+      "count": 19
+    },
+    {
+      "name": "其他",
+      "count": 3
+    }
+  ]
+}

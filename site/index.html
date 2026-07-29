@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17211f">
+  <meta name="description" content="海宁海宏新材料有限公司响应式沙发面料产品目录">
+  <title>海宏面料产品目录</title>
+  <link rel="icon" href="assets/company-logo.png">
+  <link rel="stylesheet" href="styles.css?v=github-pages">
+</head>
+<body>
+  <a class="skip-link" href="#catalog">跳到产品列表</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="海宏首页">
+        <img class="brand-full-logo" src="assets/header-logo.png" alt="HAIHONG FABRICS 海宁海宏新材料有限公司">
+      </a>
+      <nav class="header-actions" aria-label="目录工具">
+        <button class="icon-button" id="favoriteFilterButton" type="button" aria-pressed="false" title="仅看收藏">
+          <span aria-hidden="true">♡</span><span class="desktop-label">收藏</span>
+        </button>
+        <button class="price-toggle" id="priceToggle" type="button" aria-pressed="false">
+          <span class="price-eye" aria-hidden="true">◎</span>
+          <span>显示参考价</span>
+        </button>
+        <button class="icon-button filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">
+          <span aria-hidden="true">☷</span><span>筛选</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">2026 PRODUCT COLLECTION</p>
+          <h1 id="heroTitle">让每一块面料，<br><em>都更容易被看见。</em></h1>
+          <p class="hero-description">面向沙发与软体家居的响应式产品目录。支持产品编码、系列、品质、品种、规格与价格快速检索。</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#catalog">浏览全部产品</a>
+            <button class="secondary-button" id="heroPriceToggle" type="button">查看参考价格</button>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="fabric-stack stack-a"></div>
+          <div class="fabric-stack stack-b"></div>
+          <div class="fabric-stack stack-c"></div>
+          <div class="hero-card">
+            <span>HAIHONG</span>
+            <strong>TEXTILE<br>COLLECTION</strong>
+            <small>SOFA · UPHOLSTERY · FABRIC</small>
+          </div>
+        </div>
+      </div>
+      <div class="stats-strip" aria-label="目录统计">
+        <div><strong id="statProducts">—</strong><span>在售产品</span></div>
+        <div><strong id="statCategories">—</strong><span>产品系列</span></div>
+        <div><strong id="statNames">—</strong><span>产品品种</span></div>
+        <div><strong>3</strong><span>设备自适应</span></div>
+      </div>
+    </section>
+
+    <section class="category-section" aria-labelledby="categoryTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">EXPLORE COLLECTIONS</p>
+          <h2 id="categoryTitle">按系列探索</h2>
+        </div>
+        <button class="text-button" id="clearCategoryButton" type="button">查看全部 <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="category-scroller" id="categoryCards" role="list"></div>
+    </section>
+
+    <section class="catalog-section" id="catalog" aria-labelledby="catalogTitle">
+      <div class="catalog-heading">
+        <div>
+          <p class="eyebrow">PRODUCT CATALOG</p>
+          <h2 id="catalogTitle">产品目录</h2>
+          <p id="resultSummary" aria-live="polite">正在载入产品数据…</p>
+        </div>
+        <div class="catalog-heading-actions">
+          <button class="outline-button" id="resetButton" type="button">重置筛选</button>
+          <button class="primary-button compact" id="compareOpenButton" type="button" disabled>产品对比 <span id="compareCount">0</span></button>
+        </div>
+      </div>
+
+      <div class="catalog-layout">
+        <aside class="filter-panel" id="filterPanel" aria-label="产品筛选">
+          <div class="filter-panel-head">
+            <strong>筛选产品</strong>
+            <button class="close-filter" id="closeFilterButton" type="button" aria-label="关闭筛选">×</button>
+          </div>
+
+          <label class="search-field">
+            <span>搜索</span>
+            <div class="search-input-wrap">
+              <span aria-hidden="true">⌕</span>
+              <input id="searchInput" type="search" autocomplete="off" placeholder="编码、品种、名称、色坯…">
+              <button id="clearSearchButton" type="button" aria-label="清除搜索">×</button>
+            </div>
+          </label>
+
+          <label class="filter-field">
+            <span>产品系列</span>
+            <select id="categorySelect"><option value="">全部系列</option></select>
+          </label>
+
+          <label class="filter-field">
+            <span>品质定位</span>
+            <select id="tierSelect"><option value="">全部品质</option></select>
+          </label>
+
+          <label class="filter-field">
+            <span>销售工具</span>
+            <select id="typeSelect"><option value="">全部类型</option></select>
+          </label>
+
+          <label class="filter-field">
+            <span>参考价格</span>
+            <select id="priceSelect">
+              <option value="">全部价格</option>
+              <option value="0-1">≤ $1.00 / m</option>
+              <option value="1-1.5">$1.01–$1.50 / m</option>
+              <option value="1.5-2">$1.51–$2.00 / m</option>
+              <option value="2-2.5">$2.01–$2.50 / m</option>
+              <option value="2.5-999">≥ $2.51 / m</option>
+            </select>
+          </label>
+
+          <label class="filter-field">
+            <span>现货状态</span>
+            <select id="stockSelect">
+              <option value="">全部状态</option>
+              <option value="yes">有现货/备货</option>
+              <option value="no">未标记现货</option>
+            </select>
+          </label>
+
+          <label class="filter-field">
+            <span>排序方式</span>
+            <select id="sortSelect">
+              <option value="default">默认排序</option>
+              <option value="code-asc">编码升序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="weight-desc">克重从高到低</option>
+              <option value="newest">开发时间最新</option>
+            </select>
+          </label>
+
+          <div class="filter-note">
+            <strong>目录说明</strong>
+            <p>产品价格为工作簿中的参考数据，实际成交以最终报价为准。成本、利润和供应商字段未对外展示。</p>
+          </div>
+        </aside>
+
+        <div class="catalog-results">
+          <div class="active-filters" id="activeFilters" aria-label="已选筛选条件"></div>
+          <div class="product-grid" id="productGrid"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <span aria-hidden="true">⌕</span>
+            <h3>没有找到匹配产品</h3>
+            <p>尝试减少筛选条件，或使用产品编码与品种名称搜索。</p>
+            <button class="primary-button compact" id="emptyResetButton" type="button">重置筛选</button>
+          </div>
+          <div class="load-more-wrap">
+            <button class="outline-button load-more" id="loadMoreButton" type="button">加载更多</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>HAIHONG FABRICS</strong>
+      <p>海宁海宏新材料有限公司 · 沙发面料响应式产品目录</p>
+    </div>
+    <p>数据更新：<span id="sourceDate">—</span> · <button class="footer-link" id="footerPriceToggle" type="button">价格显示设置</button> · GitHub 自动更新</p>
+  </footer>
+
+  <div class="compare-bar" id="compareBar" hidden>
+    <div>
+      <strong>已选择 <span id="compareBarCount">0</span> 款产品</strong>
+      <span>最多可同时对比 4 款</span>
+    </div>
+    <div>
+      <button class="text-button light" id="clearCompareButton" type="button">清空</button>
+      <button class="primary-button compact" id="compareBarOpenButton" type="button">开始对比</button>
+    </div>
+  </div>
+
+  <div class="modal" id="productModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <button class="modal-close" type="button" data-close-modal aria-label="关闭详情">×</button>
+      <div id="productModalContent"></div>
+    </section>
+  </div>
+
+  <div class="modal" id="compareModal" hidden>
+    <div class="modal-backdrop" data-close-compare></div>
+    <section class="modal-panel compare-modal-panel" role="dialog" aria-modal="true" aria-labelledby="compareModalTitle">
+      <div class="compare-modal-head">
+        <div>
+          <p class="eyebrow">PRODUCT COMPARISON</p>
+          <h2 id="compareModalTitle">产品对比</h2>
+        </div>
+        <button class="modal-close static" type="button" data-close-compare aria-label="关闭对比">×</button>
+      </div>
+      <div class="compare-table-wrap" id="compareTableWrap"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js?v=github-pages"></script>
+</body>
+</html>
