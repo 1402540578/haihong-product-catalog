@@ -1,0 +1,2 @@
+# haihong-product-catalog
+product
