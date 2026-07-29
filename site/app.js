@@ -270,7 +270,8 @@
           <div class="card-specs">
             <div><span>克重</span><strong>${formatSpec(product.weight, "g/㎡")}</strong></div>
             <div><span>门幅</span><strong>${formatSpec(product.width, "cm")}</strong></div>
-            <div><span>上色</span><strong>${escapeHtml(product.colorMethod || "—")}</strong></div>
+            <div><span>上色</span><strong title="${escapeAttr(product.colorMethod || "—")}">${escapeHtml(product.colorMethod || "—")}</strong></div>
+            <div><span>底布1</span><strong title="${escapeAttr(product.backing1 || "—")}">${escapeHtml(product.backing1 || "—")}</strong></div>
           </div>
           <div class="price-row">
             <div class="price-block">
