@@ -7,7 +7,7 @@
   <meta name="description" content="海宁海宏新材料有限公司响应式沙发面料产品目录">
   <title>海宏面料产品目录</title>
   <link rel="icon" href="assets/company-logo.png">
-  <link rel="stylesheet" href="styles.css?v=github-pages">
+  <link rel="stylesheet" href="styles.css?v=image-viewer-1">
 </head>
 <body>
   <a class="skip-link" href="#catalog">跳到产品列表</a>
@@ -215,8 +215,20 @@
     </section>
   </div>
 
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true">
+    <div class="image-lightbox-backdrop" data-close-image-lightbox></div>
+    <section class="image-lightbox-panel" role="dialog" aria-modal="true" aria-label="产品图片大图预览">
+      <button class="image-lightbox-close" type="button" data-close-image-lightbox aria-label="关闭图片预览">×</button>
+      <figure class="image-lightbox-figure">
+        <img id="imageLightboxImage" src="" alt="">
+        <figcaption id="imageLightboxCaption"></figcaption>
+      </figure>
+    </section>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=github-pages"></script>
+  <script src="app.js?v=image-viewer-1"></script>
 </body>
 </html>

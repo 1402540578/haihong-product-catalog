@@ -70,6 +70,9 @@
     productModalContent: $("#productModalContent"),
     compareModal: $("#compareModal"),
     compareTableWrap: $("#compareTableWrap"),
+    imageLightbox: $("#imageLightbox"),
+    imageLightboxImage: $("#imageLightboxImage"),
+    imageLightboxCaption: $("#imageLightboxCaption"),
     toast: $("#toast"),
   };
 
@@ -170,6 +173,10 @@
 
     $$('[data-close-modal]').forEach(node => node.addEventListener("click", closeProductModal));
     $$('[data-close-compare]').forEach(node => node.addEventListener("click", closeCompareModal));
+    $$('[data-close-image-lightbox]').forEach(node => node.addEventListener("click", closeImageLightbox));
+    els.imageLightboxImage?.addEventListener("click", () => {
+      els.imageLightbox.classList.toggle("zoomed");
+    });
     $("#compareBarOpenButton").addEventListener("click", openCompareModal);
     els.compareOpenButton.addEventListener("click", openCompareModal);
     $("#clearCompareButton").addEventListener("click", clearCompare);
@@ -183,7 +190,8 @@
 
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") {
-        if (!els.productModal.hidden) closeProductModal();
+        if (!els.imageLightbox.hidden) closeImageLightbox();
+        else if (!els.productModal.hidden) closeProductModal();
         else if (!els.compareModal.hidden) closeCompareModal();
         else closeFilters();
       }
@@ -289,7 +297,14 @@
 
   function renderMedia(product, detail = false) {
     if (product.image) {
-      return `<img src="${escapeAttr(product.image)}" alt="${escapeAttr(product.code)} 产品实拍图" loading="lazy">`;
+      const imageAlt = `${product.code} 产品实拍图`;
+      if (detail) {
+        return `<button class="detail-image-button" type="button" data-open-image-viewer data-image-src="${escapeAttr(product.image)}" data-image-alt="${escapeAttr(imageAlt)}" aria-label="点击查看 ${escapeAttr(product.code)} 产品大图">
+          <img src="${escapeAttr(product.image)}" alt="${escapeAttr(imageAlt)}" loading="lazy">
+          <span class="detail-image-hint" aria-hidden="true">⌕ 点击查看大图</span>
+        </button>`;
+      }
+      return `<img src="${escapeAttr(product.image)}" alt="${escapeAttr(imageAlt)}" loading="lazy">`;
     }
     const hue = (product.textureIndex * 29 + 18) % 360;
     return `<div class="texture" data-pattern="${product.textureIndex}" style="--hue:${hue}"></div>`;
@@ -379,6 +394,10 @@
       openProduct(uid, false);
     }, { once: true });
     $("[data-print-product]", els.productModal)?.addEventListener("click", () => window.print());
+    $("[data-open-image-viewer]", els.productModal)?.addEventListener("click", event => {
+      const button = event.currentTarget;
+      openImageLightbox(button.dataset.imageSrc, button.dataset.imageAlt);
+    });
   }
 
   function renderProductDetail(product) {
@@ -445,7 +464,27 @@
     return `<section class="detail-section"><h3>${escapeHtml(title)}</h3><p class="long-copy">${escapeHtml(value)}</p></section>`;
   }
 
+  function openImageLightbox(src, alt) {
+    if (!src || !els.imageLightbox) return;
+    els.imageLightboxImage.src = src;
+    els.imageLightboxImage.alt = alt || "产品图片大图";
+    els.imageLightboxCaption.textContent = alt || "产品图片大图";
+    els.imageLightbox.classList.remove("zoomed");
+    els.imageLightbox.hidden = false;
+    els.imageLightbox.setAttribute("aria-hidden", "false");
+    $("[data-close-image-lightbox]", els.imageLightbox)?.focus();
+  }
+
+  function closeImageLightbox() {
+    if (!els.imageLightbox || els.imageLightbox.hidden) return;
+    els.imageLightbox.hidden = true;
+    els.imageLightbox.setAttribute("aria-hidden", "true");
+    els.imageLightbox.classList.remove("zoomed");
+    els.imageLightboxImage.removeAttribute("src");
+  }
+
   function closeProductModal() {
+    if (!els.imageLightbox.hidden) closeImageLightbox();
     if (els.productModal.hidden) return;
     els.productModal.hidden = true;
     document.body.classList.remove("modal-open");

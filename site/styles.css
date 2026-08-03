@@ -386,6 +386,11 @@ body.show-prices .price-mask { display: none; }
 .product-detail-hero { display: grid; grid-template-columns: .9fr 1.1fr; min-height: 520px; }
 .detail-media { position: relative; min-height: 480px; overflow: hidden; border-radius: 26px 0 0 26px; background: #c8c1b5; }
 .detail-media img { width: 100%; height: 100%; object-fit: cover; }
+.detail-image-button { position: relative; width: 100%; height: 100%; min-height: inherit; padding: 0; border: 0; background: transparent; cursor: zoom-in; overflow: hidden; display: block; }
+.detail-image-button img { display: block; transition: transform .28s ease; }
+.detail-image-button:hover img { transform: scale(1.025); }
+.detail-image-button:focus-visible { outline: 3px solid var(--gold); outline-offset: -5px; }
+.detail-image-hint { position: absolute; left: 18px; bottom: 18px; z-index: 2; padding: 8px 12px; border-radius: 999px; color: #fff; background: rgba(11,17,15,.72); backdrop-filter: blur(8px); font-size: 12px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
 .detail-media .texture::after { content: "无实拍图 · 纹理示意"; }
 .detail-main { padding: 54px 50px 44px; }
 .detail-main h2 { margin: 8px 0 3px; font-family: Georgia, "Songti SC", serif; font-size: clamp(34px, 4vw, 54px); font-weight: 500; line-height: 1.1; letter-spacing: -.045em; }
@@ -423,6 +428,18 @@ body.show-prices .detail-price .price-mask { display: none; }
 .compare-product-title strong { font-size: 15px; }
 .compare-product-title span { color: var(--ink-soft); }
 .compare-remove { margin-top: 9px; border: 0; color: var(--danger); background: none; padding: 0; cursor: pointer; font-size: 11px; }
+
+
+.image-lightbox { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 24px; }
+.image-lightbox-backdrop { position: absolute; inset: 0; background: rgba(4,7,6,.92); backdrop-filter: blur(12px); }
+.image-lightbox-panel { position: relative; z-index: 1; width: min(1500px, 100%); height: min(94dvh, 1000px); display: grid; place-items: center; }
+.image-lightbox-close { position: absolute; z-index: 4; top: 0; right: 0; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; color: #fff; background: rgba(20,27,25,.72); cursor: pointer; font-size: 30px; line-height: 1; backdrop-filter: blur(8px); }
+.image-lightbox-close:hover { background: rgba(255,255,255,.16); }
+.image-lightbox-figure { width: 100%; height: 100%; margin: 0; display: grid; grid-template-rows: minmax(0,1fr) auto; place-items: center; gap: 12px; overflow: auto; }
+.image-lightbox-figure img { display: block; max-width: 100%; max-height: calc(94dvh - 58px); width: auto; height: auto; object-fit: contain; cursor: zoom-in; user-select: none; box-shadow: 0 30px 90px rgba(0,0,0,.45); transition: max-width .2s ease, max-height .2s ease; }
+.image-lightbox.zoomed .image-lightbox-figure { place-items: start center; }
+.image-lightbox.zoomed .image-lightbox-figure img { max-width: none; max-height: none; cursor: zoom-out; }
+.image-lightbox-figure figcaption { color: rgba(255,255,255,.82); font-size: 13px; text-align: center; }
 
 .toast { position: fixed; z-index: 200; left: 50%; bottom: 26px; transform: translate(-50%, 30px); padding: 11px 15px; border-radius: 999px; color: white; background: var(--ink); opacity: 0; pointer-events: none; transition: .25s ease; box-shadow: var(--shadow); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -505,6 +522,11 @@ body.show-prices .detail-price .price-mask { display: none; }
   .modal { padding: 0; place-items: stretch; }
   .modal-panel { width: 100%; max-height: 100dvh; border-radius: 0; }
   .detail-media { border-radius: 0; min-height: 330px; }
+  .detail-image-hint { left: 14px; bottom: 14px; }
+  .image-lightbox { padding: 10px; }
+  .image-lightbox-panel { height: 98dvh; }
+  .image-lightbox-close { top: 8px; right: 8px; }
+  .image-lightbox-figure img { max-height: calc(98dvh - 58px); }
   .detail-main { padding: 32px 20px 24px; }
   .detail-main h2 { font-size: 38px; }
   .detail-metrics { grid-template-columns: repeat(2,1fr); }
@@ -515,7 +537,7 @@ body.show-prices .detail-price .price-mask { display: none; }
 }
 
 @media print {
-  .site-header, .hero, .category-section, .catalog-section, .site-footer, .compare-bar, .modal-backdrop, .modal-close, .detail-actions { display: none !important; }
+  .site-header, .hero, .category-section, .catalog-section, .site-footer, .compare-bar, .modal-backdrop, .modal-close, .detail-actions, .image-lightbox { display: none !important; }
   body { background: white; }
   .modal { position: static; display: block !important; padding: 0; }
   .modal-panel { max-height: none; overflow: visible; box-shadow: none; border-radius: 0; }
