@@ -522,7 +522,8 @@
     const rows = [
       ["产品编码", p => p.code], ["产品品种", p => p.name], ["一级系列", p => p.category], ["品质定位", p => p.tier],
       ["销售工具", p => p.salesToolType], ["产品克重", p => formatSpec(p.weight, "g/㎡")], ["产品门幅", p => formatSpec(p.width, "cm")],
-      ["色坯品种", p => p.greyName || "—"], ["底布材料", p => p.backing1 || "—"], ["上色方式", p => p.colorMethod || "—"],
+      ["色坯品种", p => p.greyName || "—"], ["色坯克重", p => formatSpec(p.greyWeight, "g/㎡")], ["色坯门幅", p => formatSpec(p.greyWidth, "cm")],
+      ["底布材料", p => p.backing1 || "—"], ["上色方式", p => p.colorMethod || "—"],
       ["产品 MOQ", p => p.moq ? `${p.moq} m` : "—"], ["颜色 MCQ", p => p.mcq ? `${p.mcq} m` : "—"],
       ["参考外贸价", p => state.pricesVisible ? formatUsd(p.foreignPrice) : "••••"], ["参考内贸价", p => state.pricesVisible ? formatCny(p.domesticPrice) : "••••"],
       ["现货状态", p => p.stockStatus || "未标记"], ["推荐市场", p => p.recommendedMarkets || "—"],
