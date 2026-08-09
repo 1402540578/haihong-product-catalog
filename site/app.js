@@ -404,16 +404,50 @@
     const title = product.salesNameCn && product.salesNameCn !== "/" ? product.salesNameCn : product.name;
     const favorite = state.favorites.has(product.uid);
     const compared = state.compare.has(product.uid);
+
+    // 详情页固定展示全部字段；空值统一显示“-”，不再隐藏字段。
     const specs = [
-      ["产品品种", product.name], ["销售英文名", product.salesNameEn], ["销售工具类型", product.salesToolType],
-      ["一级系列", product.category], ["品质定位", product.tier], ["花型对应编号", product.patternCode],
-      ["色坯俗称", product.greyCommonName], ["色坯品种", product.greyName], ["底布材料 1", product.backing1],
-      ["底布材料 2", product.backing2], ["其他底布推荐", product.alternativeBacking], ["后整理制程", product.finishing],
-      ["后整理明细", product.finishingDetail], ["产品质量标准", product.qualityStandard], ["色坯质量等级", product.greyQuality],
-      ["染整特殊处理", product.specialTreatment], ["卷长", product.rollMeters ? `${product.rollMeters} m` : null], ["开发时间", product.developmentDate],
-      ["产品 MOQ", product.moq ? `${product.moq} m` : null], ["颜色 MCQ", product.mcq ? `${product.mcq} m` : null], ["颜色 SCQ", product.scq ? `${product.scq} m` : null],
-      ["现货状态", product.stockStatus], ["项目类型", product.projectType], ["上色方式", product.colorMethod],
-    ].filter(([, value]) => value);
+      ["产品编码", detailValue(product.code)],
+      ["产品品种", detailValue(product.name)],
+      ["中文销售名称", detailValue(product.salesNameCn)],
+      ["英文销售名称", detailValue(product.salesNameEn)],
+      ["销售工具类型", detailValue(product.salesToolType)],
+      ["一级系列", detailValue(product.category)],
+      ["品质定位", detailValue(product.tier)],
+      ["花型对应编号", detailValue(product.patternCode)],
+      ["产品克重", detailSpec(product.weight, "g/㎡")],
+      ["产品门幅", detailSpec(product.width, "cm")],
+      ["色坯俗称", detailValue(product.greyCommonName)],
+      ["色坯品种", detailValue(product.greyName)],
+      ["色坯克重", detailSpec(product.greyWeight, "g/㎡")],
+      ["色坯门幅", detailSpec(product.greyWidth, "cm")],
+      ["底布材料 1", detailValue(product.backing1)],
+      ["底布材料 2", detailValue(product.backing2)],
+      ["其他底布推荐", detailValue(product.alternativeBacking)],
+      ["后整理制程", detailValue(product.finishing)],
+      ["后整理明细", detailValue(product.finishingDetail)],
+      ["产品质量标准", detailValue(product.qualityStandard)],
+      ["色坯质量等级", detailValue(product.greyQuality)],
+      ["染整特殊处理", detailValue(product.specialTreatment)],
+      ["卷长", detailMeters(product.rollMeters)],
+      ["开发时间", detailValue(product.developmentDate)],
+      ["产品 MOQ", detailMeters(product.moq)],
+      ["颜色 MCQ", detailMeters(product.mcq)],
+      ["颜色 SCQ", detailMeters(product.scq)],
+      ["现货 / 备货", product.hasStock ? "是" : "否"],
+      ["现货状态", detailValue(product.stockStatus)],
+      ["项目类型", detailValue(product.projectType)],
+      ["上色方式", detailValue(product.colorMethod)],
+    ];
+
+    const sellingFields = [
+      ["产品卖点", detailValue(product.sellingPoints)],
+      ["色坯卖点", detailValue(product.greySellingPoints)],
+      ["推荐销售市场", detailValue(product.recommendedMarkets)],
+      ["限制销售市场", detailValue(product.restrictedMarkets)],
+      ["热销颜色", detailValue(product.hotColors)],
+      ["趋势颜色", detailValue(product.trendColors)],
+    ];
 
     return `
       <div class="product-detail-hero">
@@ -449,14 +483,35 @@
       <div class="detail-sections">
         <section class="detail-section">
           <h3>产品规格与工艺</h3>
-          <dl class="spec-grid">${specs.map(([label, value]) => `<div class="spec-item"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(String(value))}</dd></div>`).join("")}</dl>
+          <dl class="spec-grid">${renderDetailGrid(specs)}</dl>
         </section>
-        ${renderLongDetailSection("产品卖点", product.sellingPoints)}
-        ${renderLongDetailSection("推荐销售市场", product.recommendedMarkets)}
-        ${renderLongDetailSection("热卖色 / 流行色", [product.hotColors, product.trendColors].filter(Boolean).join("\n"))}
-        ${renderLongDetailSection("限售区域", product.restrictedMarkets)}
+        <section class="detail-section">
+          <h3>产品卖点</h3>
+          <dl class="spec-grid selling-point-grid">${renderDetailGrid(sellingFields)}</dl>
+        </section>
       </div>
     `;
+  }
+
+  function detailValue(value) {
+    if (value === null || value === undefined) return "-";
+    const text = String(value).trim();
+    return !text || text === "/" || text === "—" ? "-" : text;
+  }
+
+  function detailSpec(value, unit) {
+    const text = detailValue(value);
+    return text === "-" ? "-" : `${text}${unit}`;
+  }
+
+  function detailMeters(value) {
+    const text = detailValue(value);
+    if (text === "-") return "-";
+    return /(?:米|m)/i.test(text) ? text : `${text} m`;
+  }
+
+  function renderDetailGrid(rows) {
+    return rows.map(([label, value]) => `<div class="spec-item"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(detailValue(value))}</dd></div>`).join("");
   }
 
   function renderLongDetailSection(title, value) {
