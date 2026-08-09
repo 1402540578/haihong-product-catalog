@@ -1,0 +1,60 @@
+name: 按产品系列整理图片
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 读取仓库文件
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: 安装依赖
+        run: python -m pip install -r scripts/requirements.txt
+
+      - name: 按产品系列整理图片
+        run: python scripts/organize_images_by_series.py
+
+      - name: 输出整理摘要
+        shell: bash
+        run: |
+          echo '## 产品图片按系列整理' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f reports/image-organize-report.csv ]; then
+            echo '整理报告已生成：reports/image-organize-report.csv' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          git status --short >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: 提交整理结果到仓库
+        shell: bash
+        run: |
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "没有需要提交的图片移动。"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add import/images
+          git commit -m "chore: 按产品系列整理产品图片"
+          git push
+
+      - name: 上传整理报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-organize-report
+          path: reports/image-organize-report.csv
+          if-no-files-found: warn
+          retention-days: 30
