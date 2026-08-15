@@ -287,6 +287,11 @@
               <strong>${formatUsd(product.foreignPrice)}</strong>
               <span class="price-mask">••••</span>
             </div>
+            <div class="price-block">
+              <small>参考内贸价 / 米</small>
+              <strong>${formatCny(product.domesticPrice)}</strong>
+              <span class="price-mask">••••</span>
+            </div>
             <button class="details-button" type="button" data-open-product="${escapeAttr(product.uid)}">查看详情 →</button>
           </div>
           <label class="compare-check"><input type="checkbox" data-compare="${escapeAttr(product.uid)}" ${isCompared ? "checked" : ""}>加入产品对比</label>
